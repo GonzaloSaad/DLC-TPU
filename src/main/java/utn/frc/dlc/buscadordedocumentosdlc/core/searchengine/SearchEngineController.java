@@ -6,10 +6,12 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.searchengine;
 
 
+import utn.frc.dlc.buscadordedocumentosdlc.common.GoogleDriveFormater;
 import utn.frc.dlc.buscadordedocumentosdlc.core.filesmanagement.FolderFileList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.filesmanagement.FileParser;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import utn.frc.dlc.buscadordedocumentosdlc.core.searchengine.modelcomponents.DocumentResult;
 import utn.frc.dlc.buscadordedocumentosdlc.server.SearchEngine;
@@ -60,7 +62,20 @@ public class SearchEngineController implements SearchEngine {
     
     @Override
     public List<DocumentResult> getDocumentsForSearch(String search){
-        return null;
+
+
+        String uuid = "0B_R7SeoAotsmQWlrQ1kxejNKLTQ";
+        DocumentResult d1 = new DocumentResult("Google", GoogleDriveFormater.formatToGoogleDriveURL(uuid),"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        DocumentResult d2 = new DocumentResult("Youtube","https://www.youtube.com","Bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        List<DocumentResult> results = new ArrayList<>();
+        results.add(d1);
+        results.add(d2);
+        return results;
+
+
+
+
+
     }
 
 }

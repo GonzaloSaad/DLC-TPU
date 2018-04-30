@@ -12,9 +12,20 @@ package utn.frc.dlc.buscadordedocumentosdlc.core.searchengine.modelcomponents;
 public class DocumentResult {
     private String name;
     private String url;
+    private String summary;
+
+    public DocumentResult(String name, String url, String summary) {
+        this.name = name;
+        this.url = url;
+        this.summary = summary;
+    }
 
     public String getName() {
         return name;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 
     public String getUrl() {

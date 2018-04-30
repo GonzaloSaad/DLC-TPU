@@ -22,7 +22,7 @@ public class SearchEngineModel {
     private final Map<String, PostEntry> POST;
 
     public SearchEngineModel() {
-        this(new HashMap<>(), new HashMap<>());
+        this(new HashMap<String, VocabularyEntry>(), new HashMap<String,PostEntry>());
     }
 
     public SearchEngineModel(Map<String, VocabularyEntry> vocabulary, Map<String, PostEntry> post) {

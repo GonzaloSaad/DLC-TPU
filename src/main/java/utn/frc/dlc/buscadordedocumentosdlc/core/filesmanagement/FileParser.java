@@ -61,7 +61,7 @@ public class FileParser implements Iterable<String>, Closeable {
     /**
      * Cierra el scanner para liberar el archivo.
      *
-     * @throws IOException
+     * @throws IOException - depende de scanner
      */
     @Override
     public void close() throws IOException {
@@ -97,8 +97,7 @@ public class FileParser implements Iterable<String>, Closeable {
     }
 
     /**
-     * Elimina los acentos de un string.
-     * á -> a
+     * Elimina los acentos de un string.     * 
      *
      * @param s - string a limpiar.
      * @return - el string sin acentos.
