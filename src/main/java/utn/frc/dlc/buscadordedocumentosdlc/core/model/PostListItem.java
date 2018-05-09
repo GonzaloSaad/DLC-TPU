@@ -1,8 +1,8 @@
-package com.frc.utn.searchcore.model;
+package utn.frc.dlc.buscadordedocumentosdlc.core.model;
 
 import java.io.Serializable;
 
-public class PostListItem implements Serializable, Comparable<com.frc.utn.searchcore.model.PostListItem> {
+public class PostListItem implements Serializable, Comparable<PostListItem> {
 
 
     private final int DOC_ID;
@@ -26,7 +26,7 @@ public class PostListItem implements Serializable, Comparable<com.frc.utn.search
     }
 
     @Override
-    public int compareTo(com.frc.utn.searchcore.model.PostListItem t) {
+    public int compareTo(PostListItem t) {
         return (getTf() - t.getTf()) < 0 ? 1 : -1;
     }
 
@@ -41,7 +41,7 @@ public class PostListItem implements Serializable, Comparable<com.frc.utn.search
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final com.frc.utn.searchcore.model.PostListItem other = (com.frc.utn.searchcore.model.PostListItem) obj;
+        final PostListItem other = (PostListItem) obj;
         return this.DOC_ID == other.DOC_ID;
     }
 

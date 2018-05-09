@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.io.management;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
-import com.frc.utn.searchcore.io.util.DLCObjectReader;
-import com.frc.utn.searchcore.io.util.DLCObjectWriter;
-import com.frc.utn.searchcore.model.VocabularyEntry;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.util.Map;
 
@@ -18,21 +18,21 @@ import java.util.Map;
 public class VocabularyManagement {
 
     public static final String VOCABULARY_FILE_PATH = "src/main/resources/dlc/vocabulary.dlc";
-    private static com.frc.utn.searchcore.io.management.VocabularyManagement instance;
+    private static VocabularyManagement instance;
 
     private VocabularyManagement() {
 
     }
 
-    public static com.frc.utn.searchcore.io.management.VocabularyManagement getInstance() {
+    public static VocabularyManagement getInstance() {
         if (instance == null) {
-            instance = new com.frc.utn.searchcore.io.management.VocabularyManagement();
+            instance = new VocabularyManagement();
         }
         return instance;
     }
 
     public Map<String, VocabularyEntry> getVocabulary() {
-        DLCObjectReader< Map<String, VocabularyEntry>> or = new DLCObjectReader<>();
+        DLCObjectReader<Map<String, VocabularyEntry>> or = new DLCObjectReader<>();
         return or.read(VOCABULARY_FILE_PATH);
     }
 

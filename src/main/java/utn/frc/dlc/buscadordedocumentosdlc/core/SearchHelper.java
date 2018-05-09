@@ -1,20 +1,21 @@
-package com.frc.utn.searchcore;
+package utn.frc.dlc.buscadordedocumentosdlc.core;
 
-import com.frc.utn.searchcore.files.FileParser;
-import com.frc.utn.searchcore.io.cache.Cache;
-import com.frc.utn.searchcore.io.cache.SearchCache;
-import com.frc.utn.searchcore.io.management.DocumentManagement;
-import com.frc.utn.searchcore.model.Document;
-import com.frc.utn.searchcore.model.PostList;
-import com.frc.utn.searchcore.model.PostListItem;
-import com.frc.utn.searchcore.model.VocabularyEntry;
+
+import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.Cache;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.SearchCache;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostListItem;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.util.*;
 import java.util.logging.Logger;
 
 public class SearchHelper {
 
-    private static Logger logger = Logger.getLogger(com.frc.utn.searchcore.SearchHelper.class.getName());
+    private static Logger logger = Logger.getLogger(SearchHelper.class.getName());
     private Cache cache;
 
     public SearchHelper() {
@@ -42,8 +43,8 @@ public class SearchHelper {
 
     }
 
-    private Set<VocabularyEntry> getTermsForVocabularyInNrDescendentOrder(String query) {
-        Set<VocabularyEntry> set = new TreeSet<>(new VocabularyComparator());
+    private List<VocabularyEntry> getTermsForVocabulary(String query) {
+        List<VocabularyEntry> set = new ArrayList<>();
 
         FileParser fp = new FileParser(query);
         for (String term : fp) {
@@ -61,7 +62,7 @@ public class SearchHelper {
         int N = EngineModel.getInstance().getDocMap().size();
 
         Map<Integer, DocumentResult> docMap = new HashMap<>();
-        Set<VocabularyEntry> terms = getTermsForVocabularyInNrDescendentOrder(query);
+        List<VocabularyEntry> terms = getTermsForVocabulary(query);
         int totalOfDocuments = 0;
 
         if (terms.isEmpty()) {

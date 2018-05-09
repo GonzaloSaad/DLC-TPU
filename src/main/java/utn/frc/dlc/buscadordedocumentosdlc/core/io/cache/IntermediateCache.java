@@ -1,7 +1,8 @@
-package com.frc.utn.searchcore.io.cache;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.cache;
 
-import com.frc.utn.searchcore.io.management.PostPackManagement;
-import com.frc.utn.searchcore.model.PostList;
+
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -10,7 +11,7 @@ import java.util.logging.Logger;
 public class IntermediateCache extends Cache {
 
     Thread persistingThread = new Thread();
-    private static final Logger logger = Logger.getLogger(com.frc.utn.searchcore.io.cache.IntermediateCache.class.getName());
+    private static final Logger logger = Logger.getLogger(IntermediateCache.class.getName());
 
     public IntermediateCache(int size) {
         super(size);

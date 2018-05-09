@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.io.management;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
-import com.frc.utn.searchcore.io.util.DLCObjectReader;
-import com.frc.utn.searchcore.io.util.DLCObjectWriter;
-import com.frc.utn.searchcore.model.Document;
-import org.apache.commons.lang.StringUtils;
 
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Gonzalo
@@ -18,15 +18,15 @@ public class DocumentManagement {
 
     private static final String DOCUMENTS_PATH = "src/main/resources/dlc/docs/doc";
     private static final String DOCUMENT_EXTENSION = ".dlc";
-    private static com.frc.utn.searchcore.io.management.DocumentManagement instance;
+    private static DocumentManagement instance;
 
     private DocumentManagement() {
 
     }
 
-    public static com.frc.utn.searchcore.io.management.DocumentManagement getInstance() {
+    public static DocumentManagement getInstance() {
         if (instance == null) {
-            instance = new com.frc.utn.searchcore.io.management.DocumentManagement();
+            instance = new DocumentManagement();
         }
         return instance;
     }

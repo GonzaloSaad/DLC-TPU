@@ -1,10 +1,10 @@
-package com.frc.utn.searchcore.io.management;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
-import com.frc.utn.searchcore.io.util.DLCObjectReader;
-import com.frc.utn.searchcore.io.util.DLCObjectWriter;
-import com.frc.utn.searchcore.model.PostList;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
 import java.util.Map;
 
@@ -14,15 +14,15 @@ public class PostPackManagement{
     public static final String POST_FOLDER_PATH = "src/main/resources/dlc/post/post";
     public static final String POST_FILE_EXTENSION = ".post";
 
-    private static com.frc.utn.searchcore.io.management.PostPackManagement instancePck;
+    private static PostPackManagement instancePck;
 
     private PostPackManagement(){
 
     }
 
-    public static com.frc.utn.searchcore.io.management.PostPackManagement getInstance(){
+    public static PostPackManagement getInstance(){
         if (instancePck==null){
-            instancePck = new com.frc.utn.searchcore.io.management.PostPackManagement();
+            instancePck = new PostPackManagement();
         }
         return instancePck;
     }

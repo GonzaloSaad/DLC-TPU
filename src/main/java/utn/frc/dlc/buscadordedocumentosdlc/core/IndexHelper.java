@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore;
+package utn.frc.dlc.buscadordedocumentosdlc.core;
 
-import com.frc.utn.searchcore.io.cache.Cache;
-import com.frc.utn.searchcore.io.cache.IntermediateCache;
-import com.frc.utn.searchcore.io.management.PostPackManagement;
-import com.frc.utn.searchcore.model.PostList;
-import com.frc.utn.searchcore.model.VocabularyEntry;
+
+
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.Cache;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.IntermediateCache;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.io.File;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class IndexHelper {
 
-    private static Logger logger = Logger.getLogger(com.frc.utn.searchcore.IndexHelper.class.getName());
+    private static Logger logger = Logger.getLogger(IndexHelper.class.getName());
     private Cache cache;
 
     public IndexHelper() {

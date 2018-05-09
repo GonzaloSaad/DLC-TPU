@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.model;
+package utn.frc.dlc.buscadordedocumentosdlc.core.model;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Gonzalo
  */
-public class VocabularyEntry implements Serializable, Comparable<com.frc.utn.searchcore.model.VocabularyEntry> {
+public class VocabularyEntry implements Serializable, Comparable<VocabularyEntry> {
 
     private final String TERM;
     private final int POST_FILE;
@@ -51,7 +51,7 @@ public class VocabularyEntry implements Serializable, Comparable<com.frc.utn.sea
     }
 
     @Override
-    public int compareTo(com.frc.utn.searchcore.model.VocabularyEntry otherEntry) {
+    public int compareTo(VocabularyEntry otherEntry) {
         return (this.getNr()< otherEntry.getNr()? -1 : 1);
     }
 }

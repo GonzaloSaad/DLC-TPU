@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.model;
+package utn.frc.dlc.buscadordedocumentosdlc.core.model;
 
 import java.io.Serializable;
 import java.util.*;
@@ -62,7 +62,7 @@ public class PostList implements Serializable {
         getMap().put(docID, occurance);
     }
 
-    public void mergePostEntry(com.frc.utn.searchcore.model.PostList otherPE) {
+    public void mergePostEntry(PostList otherPE) {
         Map<Integer, Integer> otherMap = otherPE.getMap();
 
         for (int docId : otherMap.keySet()) {

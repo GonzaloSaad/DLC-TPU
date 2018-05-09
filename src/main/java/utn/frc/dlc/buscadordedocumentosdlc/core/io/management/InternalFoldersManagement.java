@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.io.management;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,17 +16,17 @@ import java.util.logging.Logger;
  * @author Gonzalo
  */
 public class InternalFoldersManagement {
-    private static com.frc.utn.searchcore.io.management.InternalFoldersManagement instance;
-    private static final Logger logger = Logger.getLogger(com.frc.utn.searchcore.io.management.InternalFoldersManagement.class.getName());
+    private static InternalFoldersManagement instance;
+    private static final Logger logger = Logger.getLogger(InternalFoldersManagement.class.getName());
     private static final File ROOT_FILE = new File("src/main/resources/dlc");
 
     private InternalFoldersManagement() {
 
     }
 
-    public static com.frc.utn.searchcore.io.management.InternalFoldersManagement getInstance() {
+    public static InternalFoldersManagement getInstance() {
         if (instance == null) {
-            instance = new com.frc.utn.searchcore.io.management.InternalFoldersManagement();
+            instance = new InternalFoldersManagement();
         }
         return instance;
     }

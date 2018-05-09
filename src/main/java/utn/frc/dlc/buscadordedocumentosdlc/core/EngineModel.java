@@ -1,11 +1,13 @@
-package com.frc.utn.searchcore;
+package utn.frc.dlc.buscadordedocumentosdlc.core;
 
-import com.frc.utn.searchcore.io.management.DocumentManagement;
-import com.frc.utn.searchcore.io.management.DocumentMapManagement;
-import com.frc.utn.searchcore.io.management.InternalFoldersManagement;
-import com.frc.utn.searchcore.io.management.VocabularyManagement;
-import com.frc.utn.searchcore.model.Document;
-import com.frc.utn.searchcore.model.VocabularyEntry;
+
+
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentMapManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.InternalFoldersManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.VocabularyManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.io.File;
 import java.util.HashMap;
@@ -14,14 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EngineModel {
-    private static final Logger logger = Logger.getLogger(com.frc.utn.searchcore.EngineModel.class.getName());
-    private static com.frc.utn.searchcore.EngineModel instance;
+    private static final Logger logger = Logger.getLogger(EngineModel.class.getName());
+    private static EngineModel instance;
     private final Map<String, VocabularyEntry> VOCABULARY;
     private final Map<String, Integer> DOC_ID_MAP;
 
-    public static com.frc.utn.searchcore.EngineModel getInstance() {
+    public static EngineModel getInstance() {
         if (instance == null) {
-            instance = new com.frc.utn.searchcore.EngineModel();
+            instance = new EngineModel();
         }
         return instance;
     }

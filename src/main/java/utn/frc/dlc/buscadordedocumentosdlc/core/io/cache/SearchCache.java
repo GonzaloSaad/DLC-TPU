@@ -1,7 +1,8 @@
-package com.frc.utn.searchcore.io.cache;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.cache;
 
-import com.frc.utn.searchcore.io.management.PostPackManagement;
-import com.frc.utn.searchcore.model.PostList;
+
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
 import java.util.HashMap;
 import java.util.Map;

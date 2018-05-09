@@ -1,7 +1,7 @@
-package com.frc.utn.searchcore.io.cache;
+package utn.frc.dlc.buscadordedocumentosdlc.core.io.cache;
 
 
-import com.frc.utn.searchcore.model.PostList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +9,11 @@ import java.util.Map;
 
 public abstract class Cache {
 
-    private int pointer;
     private CachedPostPack[] cache;
     private final int sizeOfCache;
 
     public Cache(int size) {
         cache = new CachedPostPack[size];
-        pointer = 0;
         sizeOfCache = size;
     }
 

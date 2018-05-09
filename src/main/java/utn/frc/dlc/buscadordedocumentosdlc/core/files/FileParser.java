@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.files;
+package utn.frc.dlc.buscadordedocumentosdlc.core.files;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -59,7 +59,7 @@ public class FileParser implements Iterable<String>, Closeable {
                 throw new NoSuchElementException("No quedan mas palabras.");
             }
 
-            return com.frc.utn.searchcore.files.FileParser.cleanString(sc.next()).toLowerCase();
+            return FileParser.cleanString(sc.next()).toLowerCase();
 
         }
 

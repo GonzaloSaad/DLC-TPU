@@ -1,4 +1,4 @@
-package com.frc.utn.searchcore;
+package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 public class DLCConstants {
     public static final int LIMIT_WITHOUT_SAVE = 5000000;

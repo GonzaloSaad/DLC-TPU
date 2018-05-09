@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.model;
+package utn.frc.dlc.buscadordedocumentosdlc.core.model;
 
 import java.io.File;
 import java.io.Serializable;

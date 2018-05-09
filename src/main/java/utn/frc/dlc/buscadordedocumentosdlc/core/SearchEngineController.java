@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore;
+package utn.frc.dlc.buscadordedocumentosdlc.core;
 
-import com.frc.utn.searchcore.files.FileParser;
-import com.frc.utn.searchcore.files.FolderFileList;
-import com.frc.utn.searchcore.model.Document;
-import com.frc.utn.searchcore.model.PostList;
-import com.frc.utn.searchcore.model.VocabularyEntry;
+
 import org.apache.commons.io.FileUtils;
+import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
+import utn.frc.dlc.buscadordedocumentosdlc.core.files.FolderFileList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,19 +25,27 @@ import java.util.logging.Logger;
  */
 public class SearchEngineController {
 
-    private static final Logger logger = Logger.getLogger(com.frc.utn.searchcore.SearchEngineController.class.getSimpleName());
+    private static final Logger logger = Logger.getLogger(SearchEngineController.class.getSimpleName());
     private static final SearchHelper searchHelper = new SearchHelper();
+    private static SearchEngineController instance;
+
+    public static SearchEngineController getInstance() {
+        if (instance==null){
+            instance = new SearchEngineController();
+        }
+        return instance;
+    }
 
     public SearchEngineController() {
-
+        EngineModel.getInstance();
     }
 
-    public List<Document> getDocumentsForQuery(String query){
-        logger.log(Level.INFO,"QUERIIIIII");
-       return searchHelper.handle(query);
+    public List<Document> getDocumentsForQuery(String query) {
+        logger.log(Level.INFO, "QUERIIIIII");
+        return searchHelper.handle(query);
     }
 
-    public void indexFolder(String path)  {
+    public void runIndexation(String path) {
         logger.log(Level.INFO, "Starting indexing.");
 
         IndexHelper indexHelper = new IndexHelper();
@@ -47,9 +56,9 @@ public class SearchEngineController {
         FolderFileList fl = new FolderFileList(path);
 
         for (File f : fl) {
-            long sizeOfFile = f.length()/1000;
+            long sizeOfFile = f.length() / 1000;
             sizeOfIndexed += sizeOfFile;
-            logger.log(Level.INFO, "Document to ingest: [{0}] \tSize: {1}KB\tTotal: {2}KB.", new Object[]{f.getName(), sizeOfFile,sizeOfIndexed});
+            logger.log(Level.INFO, "Document to ingest: [{0}] \tSize: {1}KB\tTotal: {2}KB.", new Object[]{f.getName(), sizeOfFile, sizeOfIndexed});
 
 
             boolean shouldSave = false;
@@ -100,8 +109,6 @@ public class SearchEngineController {
 
         return text;
     }
-
-
 
 
 }

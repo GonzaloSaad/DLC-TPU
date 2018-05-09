@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.frc.utn.searchcore.files;
+package utn.frc.dlc.buscadordedocumentosdlc.core.files;
 
 import java.io.File;
 import java.io.FilenameFilter;
