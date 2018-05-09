@@ -22,6 +22,10 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.searchengine.modelcomponents.Doc
 @WebServlet(urlPatterns = "/search")
 public class SearchServlet extends HttpServlet {
 
+    
+    
+    
+    
     private static SearchEngine searchEngine = new SearchEngineController();
 
     @Override
