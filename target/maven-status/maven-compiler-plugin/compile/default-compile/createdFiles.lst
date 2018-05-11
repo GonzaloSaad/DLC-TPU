@@ -1,0 +1,15 @@
+utn\frc\dlc\buscadordedocumentosdlc\core\filesmanagement\FileParser$FileIterator.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\SearchEngineController.class
+utn\frc\dlc\buscadordedocumentosdlc\server\SearchEngine.class
+utn\frc\dlc\buscadordedocumentosdlc\core\filesmanagement\FileParser$1.class
+utn\frc\dlc\buscadordedocumentosdlc\server\IndexerServlet.class
+Prueba\drive\ObtenerNombres.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\io\ArrayListWritter.class
+utn\frc\dlc\buscadordedocumentosdlc\core\filesmanagement\FolderFileList.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\io\ArrayListReader.class
+utn\frc\dlc\buscadordedocumentosdlc\core\filesmanagement\FileParser.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\SearchEngineModel.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\modelcomponents\DocumentResult.class
+utn\frc\dlc\buscadordedocumentosdlc\server\SearchServlet.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\modelcomponents\PostEntry.class
+utn\frc\dlc\buscadordedocumentosdlc\core\searchengine\modelcomponents\VocabularyEntry.class
