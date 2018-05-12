@@ -50,6 +50,11 @@ public class SearchServlet extends HttpServlet {
         List<File> results = null;
         ObtenerNombres o = new ObtenerNombres();
         try {
+            o.Descargar();
+        } catch (GeneralSecurityException ex) {
+            Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             results = o.resultados();
         } catch (GeneralSecurityException ex) {
             Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
