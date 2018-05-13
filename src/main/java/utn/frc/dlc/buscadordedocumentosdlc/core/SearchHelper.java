@@ -27,7 +27,7 @@ public class SearchHelper {
     }
 
     public List<Document> handle(String query) {
-        Set<DocumentResult> docSet = getBestRDocumentsForQuery(query);
+        Set<DocumentResult> docSet = getOrderedDocumentsForQuery(query);
         List<Document> documentList = new ArrayList<>();
         int documents = 0;
 
@@ -63,7 +63,7 @@ public class SearchHelper {
         return set;
     }
 
-    private Set<DocumentResult> getBestRDocumentsForQuery(String query) {
+    private Set<DocumentResult> getOrderedDocumentsForQuery(String query) {
 
         int N = EngineModel.getInstance().getDocMap().size();
 
@@ -84,10 +84,6 @@ public class SearchHelper {
 
             int Nr = ve.getNr();
             double idf = Math.log((double) N / (double) Nr);
-
-            if (idf == 0){
-                continue;
-            }
 
             for (PostListItem pli : pl.getListOfDocument()) {
 
