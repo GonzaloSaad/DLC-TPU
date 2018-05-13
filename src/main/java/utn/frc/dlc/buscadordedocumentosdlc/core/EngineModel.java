@@ -2,6 +2,7 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 
+import com.google.api.services.drive.model.File;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentMapManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.InternalFoldersManagement;
@@ -9,7 +10,6 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.VocabularyManageme
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -65,11 +65,11 @@ public class EngineModel {
         return DOC_ID_MAP;
     }
 
-    public Integer getFromDocMap(File file) {
+    public Integer getFromDocMap(com.google.api.services.drive.model.File file) {
         return getDocMap().get(file.getName());
     }
 
-    public void addToDocMap(File file, int docID) {
+    public void addToDocMap(com.google.api.services.drive.model.File file, int docID) {
         getDocMap().put(file.getName(), docID);
         persistDocument(file, docID);
     }
@@ -87,7 +87,7 @@ public class EngineModel {
         DocumentMapManagement.getInstance().saveDocumentMap(DOC_ID_MAP);
     }
 
-    private void persistDocument(File file, int docID) {
+    private void persistDocument(com.google.api.services.drive.model.File file, int docID) {
         new DocumentPersistingThread(file, docID).start();
     }
 
@@ -96,7 +96,7 @@ public class EngineModel {
         Document doc;
 
         public DocumentPersistingThread(File file, int docID) {
-            doc = new Document(file, docID);
+            doc = new Document(file.getId(),file.getName(),file.getWebContentLink(),file.getWebViewLink(),docID);
 
         }
 

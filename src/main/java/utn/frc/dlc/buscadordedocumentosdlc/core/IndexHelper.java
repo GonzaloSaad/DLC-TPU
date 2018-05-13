@@ -7,13 +7,13 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 
+import com.google.api.services.drive.model.File;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.Cache;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.IntermediateCache;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

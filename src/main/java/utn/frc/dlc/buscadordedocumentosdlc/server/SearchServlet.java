@@ -24,11 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/search")
 public class SearchServlet extends HttpServlet {
 
-    
-    
-    
-    
-
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {

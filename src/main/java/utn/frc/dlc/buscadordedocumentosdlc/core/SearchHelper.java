@@ -29,14 +29,20 @@ public class SearchHelper {
     public List<Document> handle(String query) {
         Set<DocumentResult> docSet = getBestRDocumentsForQuery(query);
         List<Document> documentList = new ArrayList<>();
-
+        int documents = 0;
 
         if (docSet!=null && !docSet.isEmpty()){
             for(DocumentResult dr: docSet){
                 Document doc = DocumentManagement.getInstance().getDocument(dr.getDocID());
                 if (doc!=null){
                     documentList.add(doc);
+                    documents++;
                 }
+
+                if (documents == DLCConstants.R){
+                    break;
+                }
+
             }
         }
         return documentList;
@@ -63,13 +69,12 @@ public class SearchHelper {
 
         Map<Integer, DocumentResult> docMap = new HashMap<>();
         List<VocabularyEntry> terms = getTermsForVocabulary(query);
-        int totalOfDocuments = 0;
 
         if (terms.isEmpty()) {
             return null;
         }
 
-        termloop:
+
         for (VocabularyEntry ve : terms) {
 
             PostList pl = getPostList(ve);
@@ -80,21 +85,19 @@ public class SearchHelper {
             int Nr = ve.getNr();
             double idf = Math.log((double) N / (double) Nr);
 
+            if (idf == 0){
+                continue;
+            }
+
             for (PostListItem pli : pl.getListOfDocument()) {
 
                 DocumentResult dr = docMap.get(pli.getDocID());
                 if (dr == null) {
                     dr = new DocumentResult(pli.getDocID());
                     docMap.put(dr.getDocID(), dr);
-                    totalOfDocuments++;
                 }
                 double valueOfTermInDoc = pli.getTf() * idf;
                 dr.addToValue(valueOfTermInDoc);
-
-
-                if (totalOfDocuments == DLCConstants.R) {
-                    break termloop;
-                }
             }
         }
 

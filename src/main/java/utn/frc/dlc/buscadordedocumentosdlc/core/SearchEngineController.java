@@ -6,15 +6,18 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
+import com.google.api.services.drive.model.File;
 import org.apache.commons.io.FileUtils;
 import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
 import utn.frc.dlc.buscadordedocumentosdlc.core.files.FolderFileList;
+import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveDowloader;
+import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveFileList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
-import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,74 +44,67 @@ public class SearchEngineController {
     }
 
     public List<Document> getDocumentsForQuery(String query) {
-        logger.log(Level.INFO, "QUERIIIIII");
+        logger.log(Level.INFO, "Query: {0}",query);
         return searchHelper.handle(query);
     }
 
-    public void runIndexation(String path) {
-        logger.log(Level.INFO, "Starting indexing.");
+    public void runIndexation(String folderUID) throws IOException, GeneralSecurityException {
 
-        IndexHelper indexHelper = new IndexHelper();
+            logger.log(Level.INFO, "Starting indexing.");
 
-        int indexedTerms = 0;
-        long sizeOfIndexed = 0;
+            IndexHelper indexHelper = new IndexHelper();
 
-        FolderFileList fl = new FolderFileList(path);
+            int indexedTerms = 0;
+            long sizeOfIndexed = 0;
 
-        for (File f : fl) {
-            long sizeOfFile = f.length() / 1000;
-            sizeOfIndexed += sizeOfFile;
-            logger.log(Level.INFO, "Document to ingest: [{0}] \tSize: {1}KB\tTotal: {2}KB.", new Object[]{f.getName(), sizeOfFile, sizeOfIndexed});
+            GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
+
+            for (File f : drive) {
+                long sizeOfFile = 0;
+                sizeOfIndexed += sizeOfFile;
+                logger.log(Level.INFO, "Document to ingest: [{0}] \tSize: {1}KB\tTotal: {2}KB.", new Object[]{f.getName(), sizeOfFile,sizeOfIndexed});
 
 
-            boolean shouldSave = false;
-            int termsRed = 0;
+                boolean shouldSave = false;
+                int termsRed = 0;
 
-            Integer docID = indexHelper.getDocumentID(f);
+                Integer docID = indexHelper.getDocumentID(f);
 
-            String text = read(f);
-            FileParser fp = new FileParser(text);
+                String text = read(f);
+                FileParser fp = new FileParser(text);
 
-            for (String term : fp) {
-                if (!term.trim().isEmpty()) {
+                for (String term : fp) {
+                    if (!term.trim().isEmpty()) {
 
-                    termsRed++;
-                    indexedTerms++;
+                        termsRed++;
+                        indexedTerms++;
 
-                    if (indexedTerms % DLCConstants.LIMIT_WITHOUT_SAVE == 0) {
-                        shouldSave = true;
+                        if (indexedTerms % DLCConstants.LIMIT_WITHOUT_SAVE == 0) {
+                            shouldSave = true;
+                        }
+
+                        VocabularyEntry ve = indexHelper.getVocabularyEntryForTerm(term);
+                        PostList pl = indexHelper.getPostList(ve);
+
+                        ve.addTermOcurrance();
+                        pl.addDocument(docID);
+
                     }
-
-                    VocabularyEntry ve = indexHelper.getVocabularyEntryForTerm(term);
-                    PostList pl = indexHelper.getPostList(ve);
-
-                    ve.addTermOcurrance();
-                    pl.addDocument(docID);
-
+                }
+                logger.log(Level.INFO, "Terms red for document [{0}]. Total terms indexed [{1}]", new Object[]{termsRed, indexedTerms});
+                if (shouldSave) {
+                    indexHelper.commit();
                 }
             }
-            logger.log(Level.INFO, "Terms red for document [{0}]. Total terms indexed [{1}]", new Object[]{termsRed, indexedTerms});
-            if (shouldSave) {
-                indexHelper.commit();
-            }
-        }
-        logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
-        indexHelper.finishIndexing();
-        /*searchHelper.update();*/
+            logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
+            indexHelper.finishIndexing();
+            /*searchHelper.update();*/
 
-    }
-
-    private String read(File file) {
-        String text = "";
-
-        try {
-            text = FileUtils.readFileToString(file);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        return text;
-    }
+        private String read(com.google.api.services.drive.model.File file) throws IOException {
+            return GoogleDriveDowloader.download(file);
+        }
 
 
 }

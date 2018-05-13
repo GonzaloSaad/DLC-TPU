@@ -13,32 +13,41 @@ import java.io.Serializable;
  * @author gonzalo.saad
  */
 public class Document implements Serializable {
-    private final int docID;
+    private final String id;
     private final String name;
-    private final String url;
+    private final String webContentLink;
+    private final String webViewLink;
+    private int DLCID;
 
-    public Document(String name, String url, int docID) {
+    public Document(String ID, String name, String downloadLink, String viewLink, int id) {
+        this.id = ID;
         this.name = name;
-        this.url = url;
-        this.docID = docID;
+        this.webContentLink = downloadLink;
+        this.webViewLink = viewLink;
+        this.DLCID = id;
     }
 
-    public Document(File file, int docID){
-        this(file.getName(),file.getAbsolutePath(),docID);
-    }
-
-    public int getDocID() {
-        return docID;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-
-    public String getUrl() {
-        return url;
+    public String getWebContentLink() {
+        return webContentLink;
     }
-    
-    
+
+    public String getWebViewLink() {
+        return webViewLink;
+    }
+
+    public int getDLCID() {
+        return DLCID;
+    }
+
+
+
+
 }
