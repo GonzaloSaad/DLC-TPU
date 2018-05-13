@@ -120,6 +120,10 @@ public class SearchHelper {
         return postPack.get(ve.getTerm());
     }
 
+    public void update() {
+        cache.update();
+    }
+
     private static class DocumentResult implements Comparable<DocumentResult> {
         private final int DOCID;
         private double value;

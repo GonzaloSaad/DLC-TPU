@@ -86,6 +86,19 @@ public class SearchCache extends Cache {
         clean();
     }
 
+    @Override
+    public void update() {
+        for (CachedPostPack c: getCache()){
+            if (c!=null){
+                CachedPostPack dp = getPostPackFromStorage(c.getFile());
+                Integer index = cacheMap.get(c.getFile());
+                if (index!=null){
+                    set(dp,index);
+                }
+            }
+        }
+    }
+
     public double occupacy() {
         int cached = 0;
         for (CachedPostPack c : getCache()) {

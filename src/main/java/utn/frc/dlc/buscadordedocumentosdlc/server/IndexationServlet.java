@@ -13,6 +13,9 @@ import java.security.GeneralSecurityException;
 @WebServlet(urlPatterns = "/index")
 public class IndexationServlet extends HttpServlet {
 
+    private static SearchEngineController searchEngineController = SearchEngineController.getInstance();
+
+
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/indexerHome.jsp").forward(httpServletRequest, httpServletResponse);
@@ -21,15 +24,12 @@ public class IndexationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String folderUID = httpServletRequest.getParameter("f");
-        String message = "Index Failure.";
 
         try {
-            SearchEngineController.getInstance().runIndexation(folderUID);
-            message = "Indexation done.";
+            searchEngineController.runIndexation(folderUID);
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
-        httpServletRequest.setAttribute("message", message);
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/indexerHome.jsp").forward(httpServletRequest, httpServletResponse);
 
     }

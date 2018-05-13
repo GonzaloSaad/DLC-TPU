@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/search")
 public class SearchServlet extends HttpServlet {
 
+    private static SearchEngineController searchEngineController = SearchEngineController.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -33,12 +34,10 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String query = httpServletRequest.getParameter("q");
-        List<Document> results = SearchEngineController.getInstance().getDocumentsForQuery(query);
+        List<Document> results = searchEngineController.getDocumentsForQuery(query);
         httpServletRequest.setAttribute("q", query);
         httpServletRequest.setAttribute("results", results);
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/searchHome.jsp").forward(httpServletRequest, httpServletResponse);
-
-
     }
 
 }
