@@ -56,4 +56,5 @@ public abstract class Cache {
     }
 
 
+    public abstract void update();
 }

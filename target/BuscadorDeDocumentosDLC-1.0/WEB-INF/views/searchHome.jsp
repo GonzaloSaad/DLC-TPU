@@ -19,18 +19,20 @@
     
     
     <script >
-        function addNewRow(a) {
+        function addNewRow(a) {           
             
-            
-        var d = document.getElementById('tabla1');
-                                        
-    var tablaHtml = "<div class='container' id='tabla' style='background-color: #ffffff ;border:ridge #ffffcb'><div class='row'>";
+           var d = document.getElementById('tabla1');
+        var tablaHtml;
+    if(a.length > 0)
+    {    
+    tablaHtml = "<div class='container' id='tabla' style='background-color: #ffffff ;border:ridge #ffffcb'><div class='row'>";
     tablaHtml += "<table class='table table-bordered '>";
     tablaHtml = tablaHtml + "<tr><th>Id</th><th>Nombre</th><th>Previsualizar</th><th>Descargar</th>";
 
+    
     for (i=0; i<a.length; i++ ) {
 
-        tablaHtml = tablaHtml + "<tr >";
+        tablaHtml = tablaHtml + "<tr>";
 
         var td1 = "<td>" + a[i].id + "</td>";
         var td2 = "<td>" + a[i].name + "</td>";
@@ -42,10 +44,19 @@
         tablaHtml = tablaHtml + td1 + td2 + td3 + td4 + "</tr>";
     }
 
-    tablaHtml = tablaHtml + "</table>" + "</div>" + "</div>";
+        tablaHtml = tablaHtml + "</table>" + "</div>" + "</div>";
     
-    d.innerHTML = tablaHtml;
+    
+        
         }
+        else
+        {
+           tablaHtml ="<div class='container' id='tabla' style='background-color: #ffffff ;border:ridge #ffffcb'><div class='row'><div class='col' style='text-align:center'>" + "<h2 style='text-align:center'>"+  "La busqueda no produjo resultados" + "</h2>" + "</div>" +  "</div>" + "</div>"; 
+            
+        }
+        
+        d.innerHTML = tablaHtml;
+    }
         
         
     </script>
@@ -59,47 +70,30 @@
                         <div class="row">
                     <input type="text" name="q" value="${q}" class="form-control" style="  width: 400px; margin: 1em 1em">                
                     <div class="form-group" role="form" >
-                        <input type="submit"  formmethod="post" formaction="/index/search" class="btn-sm btn-group-toggle" value="Buscar" style=" background: #ccffcc ;width: 120px; margin: 1em ; font-size: 15px"  >
+                        <input type="submit"  formmethod="post" formaction="/search" class="btn-sm btn-group-toggle" value="Buscar" style=" background: #ccffcc ;width: 120px; margin: 1em ; font-size: 15px"  >
                     </div>
                     <div class="form-group" role="form">
-                    <input type="submit" formaction="/index/index" class="btn-sm btn-group-toggle" value="Ir a Indexado" style=" background: #ccffcc ;width: 120px; margin: 1em ; font-size: 15px"  >
+                    <input type="submit" formaction="/index" class="btn-sm btn-group-toggle" value="Ir a Indexado" style=" background: #ccffcc ;width: 120px; margin: 1em ; font-size: 15px"  >
                     </div>
                     </div>
                     </div>
 	        </form>
         </div>
         <hr>
-        
-        
     
-          
-        
         <div id="tabla1"></div>
         
         
         
         <div class=search_result>
                             
-				
-                                    <script>
-                                        addNewRow(${results});
-                                    </script>
-                                    
-                                    <%--
-                                    <div class="row">
-                                            <div class="col-2">
-                                                <a href="${result.url}" target="_blank">${result.name}</a>
-                                            </div>
-                                    
-   					<div class="col-2">
-                                                <p>${result.summary}</p>
-                                        </div>
-                                        </div>
-                                        --%>
-                                   
-   					
-   				
-			
+		
+            
+            <script>    
+                addNewRow(${results});
+            </script>
+            
+             
         </div>
         
     </body>

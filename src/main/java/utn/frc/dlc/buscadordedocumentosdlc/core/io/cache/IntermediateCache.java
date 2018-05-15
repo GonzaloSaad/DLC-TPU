@@ -47,6 +47,11 @@ public class IntermediateCache extends Cache {
         clean();
     }
 
+    @Override
+    public void update() {
+
+    }
+
     private void mergePostPacks(boolean parallel) {
 
         try {

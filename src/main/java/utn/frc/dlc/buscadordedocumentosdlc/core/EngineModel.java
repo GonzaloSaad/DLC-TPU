@@ -2,6 +2,8 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 
+import com.google.api.services.drive.model.File;
+import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentMapManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.InternalFoldersManagement;
@@ -9,7 +11,6 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.VocabularyManageme
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -21,14 +22,14 @@ public class EngineModel {
     private final Map<String, VocabularyEntry> VOCABULARY;
     private final Map<String, Integer> DOC_ID_MAP;
 
-    public static EngineModel getInstance() {
+    public static EngineModel getInstance()  {
         if (instance == null) {
             instance = new EngineModel();
         }
         return instance;
     }
 
-    private EngineModel() {
+    private EngineModel()  {
 
         Map<String, Integer> dmap = DocumentMapManagement.getInstance().getDocumentMap();
         Map<String, VocabularyEntry> voc = VocabularyManagement.getInstance().getVocabulary();
@@ -65,11 +66,11 @@ public class EngineModel {
         return DOC_ID_MAP;
     }
 
-    public Integer getFromDocMap(File file) {
+    public Integer getFromDocMap(com.google.api.services.drive.model.File file) {
         return getDocMap().get(file.getName());
     }
 
-    public void addToDocMap(File file, int docID) {
+    public void addToDocMap(com.google.api.services.drive.model.File file, int docID) {
         getDocMap().put(file.getName(), docID);
         persistDocument(file, docID);
     }
@@ -87,7 +88,7 @@ public class EngineModel {
         DocumentMapManagement.getInstance().saveDocumentMap(DOC_ID_MAP);
     }
 
-    private void persistDocument(File file, int docID) {
+    private void persistDocument(com.google.api.services.drive.model.File file, int docID) {
         new DocumentPersistingThread(file, docID).start();
     }
 
@@ -96,7 +97,7 @@ public class EngineModel {
         Document doc;
 
         public DocumentPersistingThread(File file, int docID) {
-            doc = new Document(file, docID);
+            doc = new Document(file.getId(),file.getName(),file.getWebContentLink(),file.getWebViewLink(),docID);
 
         }
 
