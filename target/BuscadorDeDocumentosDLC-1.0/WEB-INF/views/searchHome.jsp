@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Buscador de Documentos</title>
-        <link href="/CSS/bootstrap.css" rel="stylesheet"/>
+        <link href="CSS/bootstrap.css" rel="stylesheet"/>
         <link rel="stylesheet" href="CSS/bootstrap.min.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
@@ -33,8 +33,8 @@
 
                 var td1 = "<td>" + a[i].id + "</td>";
                 var td2 = "<td>" + a[i].name + "</td>";
-                var td3 = "<td>" + "<a href=" + a[i].webViewLink + ">"+ a[i].webViewLink + "</a>" + "</td>";
-                var td4 = "<td>" + "<a href=" + a[i].webContentLink + ">" + a[i].webContentLink + "</td>";
+                var td3 = "<td>" + "<a href='" + a[i].webViewLink + "' target='_blank'>"+ a[i].webViewLink + "</a>" + "</td>";
+                var td4 = "<td>" + "<a href='" + a[i].webContentLink + "' target='_blank'>" + a[i].webContentLink + "</td>";
                 
 
                 tablaHtml = tablaHtml + td1 + td2 + td3 + td4 + "</tr>";
