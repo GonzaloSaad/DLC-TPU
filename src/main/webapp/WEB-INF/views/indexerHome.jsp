@@ -30,13 +30,13 @@
                     
                     
                     <div class="form-group" role="form"  >
-                        <input type="submit" formmethod="post" formaction="/index" class="btn-sm btn-group-toggle" value="Cargar Url" style=" align-self: stretch; background: #ccffcc ;width: 120px; margin: 1em 1em ; font-size: 15px">
+                        <input type="submit" formmethod="post" formaction="dlc/index" class="btn-sm btn-group-toggle" value="Cargar Url" style=" align-self: stretch; background: #ccffcc ;width: 120px; margin: 1em 1em ; font-size: 15px">
                     </div>
                     
                     
                     
                     <div class="form-group" role="form" >
-                        <input type="submit" formaction="/search" class="btn-sm btn-group-toggle" value="Ir a la pagina de busqueda" style=" align-self: stretch; background: #ccffcc ;width: 200px; margin: 1em 1em ; font-size: 15px"> 
+                        <input type="submit" formaction="dlc/search" class="btn-sm btn-group-toggle" value="Ir a la pagina de busqueda" style=" align-self: stretch; background: #ccffcc ;width: 200px; margin: 1em 1em ; font-size: 15px"> 
                     </div>
                         
                     

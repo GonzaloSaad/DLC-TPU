@@ -5,6 +5,7 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
+import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class VocabularyManagement {
 
-    public static final String VOCABULARY_FILE_PATH = "src/main/resources/dlc/vocabulary.dlc";
+    public static final String VOCABULARY_FILE_PATH = "/dlc/vocabulary.dlc";
     private static VocabularyManagement instance;
 
     private VocabularyManagement() {
@@ -31,7 +32,7 @@ public class VocabularyManagement {
         return instance;
     }
 
-    public Map<String, VocabularyEntry> getVocabulary() {
+    public Map<String, VocabularyEntry> getVocabulary()  {
         DLCObjectReader<Map<String, VocabularyEntry>> or = new DLCObjectReader<>();
         return or.read(VOCABULARY_FILE_PATH);
     }

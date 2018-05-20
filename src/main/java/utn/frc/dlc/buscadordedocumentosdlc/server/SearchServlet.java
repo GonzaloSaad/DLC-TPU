@@ -5,6 +5,10 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.server;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import utn.frc.dlc.buscadordedocumentosdlc.core.SearchEngineController;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 
@@ -35,8 +39,11 @@ public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String query = httpServletRequest.getParameter("q");
         List<Document> results = searchEngineController.getDocumentsForQuery(query);
+        ObjectMapper mapper = new ObjectMapper();
+        
+        
         httpServletRequest.setAttribute("q", query);
-        httpServletRequest.setAttribute("results", results);
+        httpServletRequest.setAttribute("results", mapper.writeValueAsString(results));
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/searchHome.jsp").forward(httpServletRequest, httpServletResponse);
     }
 
