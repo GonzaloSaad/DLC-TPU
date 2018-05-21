@@ -6,6 +6,7 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
+import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class DocumentMapManagement {
     
-    private static final String DOCUMENT_MAP_PATH = "src/main/resources/dlc/dmap.dlc";
+    private static final String DOCUMENT_MAP_PATH = "/dlc/dmap.dlc";
     private static DocumentMapManagement instance;
     
     private DocumentMapManagement(){
@@ -31,7 +32,7 @@ public class DocumentMapManagement {
         return instance;
     }
     
-    public Map<String,Integer> getDocumentMap(){
+    public Map<String,Integer> getDocumentMap() {
         DLCObjectReader<Map<String,Integer>> or = new DLCObjectReader<>();
         return or.read(DOCUMENT_MAP_PATH);
     }

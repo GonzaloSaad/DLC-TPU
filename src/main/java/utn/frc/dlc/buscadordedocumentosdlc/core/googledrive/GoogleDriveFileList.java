@@ -28,9 +28,9 @@ public class GoogleDriveFileList implements Iterable<File> {
 
     private static final String APPLICATION_NAME = "BuscadorDLC";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final String CREDENTIALS_FOLDER = "credentials"; // Directory to store user credentials.
+    private static final String CREDENTIALS_FOLDER = "/credentials"; // Directory to store user credentials.
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
-    private static final String CLIENT_SECRET_DIR = "./client_secret.json";
+    private static final String CLIENT_SECRET_DIR = "/client_secret.json";
     private static final String ONLY_TXT_REGEX = ".+\\.txt";
     private final List<File> DOCUMENT_LIST;
 

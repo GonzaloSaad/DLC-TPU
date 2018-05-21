@@ -1,6 +1,7 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
+import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.Cache;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.SearchCache;
@@ -26,8 +27,8 @@ public class SearchHelper {
         cache = new SearchCache(DLCConstants.SEARCH_CACHE_SIZE);
     }
 
-    public List<Document> handle(String query) {
-        Set<DocumentResult> docSet = getOrderedDocumentsForQuery(query);
+    public List<Document> handle(String query) throws IOException {
+        Set<DocumentResult> docSet = getBestRDocumentsForQuery(query);
         List<Document> documentList = new ArrayList<>();
         int documents = 0;
 
@@ -49,7 +50,7 @@ public class SearchHelper {
 
     }
 
-    private List<VocabularyEntry> getTermsForVocabulary(String query) {
+    private List<VocabularyEntry> getTermsForVocabulary(String query) throws IOException {
         List<VocabularyEntry> set = new ArrayList<>();
 
         FileParser fp = new FileParser(query);
@@ -63,7 +64,7 @@ public class SearchHelper {
         return set;
     }
 
-    private Set<DocumentResult> getOrderedDocumentsForQuery(String query) {
+    private Set<DocumentResult> getBestRDocumentsForQuery(String query) throws IOException {
 
         int N = EngineModel.getInstance().getDocMap().size();
 
@@ -84,6 +85,10 @@ public class SearchHelper {
 
             int Nr = ve.getNr();
             double idf = Math.log((double) N / (double) Nr);
+
+//            if (idf == 0){
+//                continue;
+//            }
 
             for (PostListItem pli : pl.getListOfDocument()) {
 

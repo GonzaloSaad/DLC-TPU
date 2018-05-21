@@ -3,6 +3,7 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 import com.google.api.services.drive.model.File;
+import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentMapManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.InternalFoldersManagement;
@@ -21,14 +22,14 @@ public class EngineModel {
     private final Map<String, VocabularyEntry> VOCABULARY;
     private final Map<String, Integer> DOC_ID_MAP;
 
-    public static EngineModel getInstance() {
+    public static EngineModel getInstance()  {
         if (instance == null) {
             instance = new EngineModel();
         }
         return instance;
     }
 
-    private EngineModel() {
+    private EngineModel()  {
 
         Map<String, Integer> dmap = DocumentMapManagement.getInstance().getDocumentMap();
         Map<String, VocabularyEntry> voc = VocabularyManagement.getInstance().getVocabulary();

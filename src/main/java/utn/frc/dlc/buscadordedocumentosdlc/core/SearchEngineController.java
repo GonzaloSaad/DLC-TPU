@@ -32,18 +32,18 @@ public class SearchEngineController {
     private static final SearchHelper searchHelper = new SearchHelper();
     private static SearchEngineController instance;
 
-    public static SearchEngineController getInstance() {
+    public static SearchEngineController getInstance()  {
         if (instance==null){
             instance = new SearchEngineController();
         }
         return instance;
     }
 
-    public SearchEngineController() {
+    public SearchEngineController()  {
         EngineModel.getInstance();
     }
 
-    public List<Document> getDocumentsForQuery(String query) {
+    public List<Document> getDocumentsForQuery(String query) throws IOException {
         logger.log(Level.INFO, "Query: {0}",query);
         return searchHelper.handle(query);
     }

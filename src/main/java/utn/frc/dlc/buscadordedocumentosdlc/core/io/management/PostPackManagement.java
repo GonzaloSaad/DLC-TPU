@@ -1,6 +1,7 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
+import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class PostPackManagement{
 
 
-    public static final String POST_FOLDER_PATH = "src/main/resources/dlc/post/post";
+    public static final String POST_FOLDER_PATH = "/dlc/post/post";
     public static final String POST_FILE_EXTENSION = ".post";
 
     private static PostPackManagement instancePck;
@@ -27,7 +28,7 @@ public class PostPackManagement{
         return instancePck;
     }
 
-    public Map<String,PostList> getPostPack(int postNumber){
+    public Map<String,PostList> getPostPack(int postNumber) {
         DLCObjectReader<Map<String,PostList>> or = new DLCObjectReader<>();
         return or.read(createPath(postNumber));
     }

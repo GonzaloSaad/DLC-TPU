@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class InternalFoldersManagement {
     private static InternalFoldersManagement instance;
     private static final Logger logger = Logger.getLogger(InternalFoldersManagement.class.getName());
-    private static final File ROOT_FILE = new File("src/main/resources/dlc");
+    private static final File ROOT_FILE = new File("/dlc");
 
     private InternalFoldersManagement() {
 
@@ -37,6 +37,7 @@ public class InternalFoldersManagement {
             delete(ROOT_FILE);
             logger.log(Level.INFO, "All files erased.");
         } catch (Exception e) {
+            
             throw new RuntimeException("Failed to clear files, system will not be consistent");
         }
     }
