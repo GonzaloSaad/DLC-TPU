@@ -18,7 +18,7 @@
         </style>
     </head>
     <body style="background-color: beige">
-        <h1 style="text-align: center">Indexador de Documentos - TP1 </h1>
+        <h1 style="text-align: center">DLC - TPU - Indexador de Documentos</h1>
         <hr>
         <div class=search_header>
             <form class="form-inline" role="form" >

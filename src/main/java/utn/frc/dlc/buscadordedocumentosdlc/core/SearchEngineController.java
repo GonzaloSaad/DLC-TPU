@@ -33,7 +33,7 @@ public class SearchEngineController {
     private static SearchEngineController instance;
 
     public static SearchEngineController getInstance() {
-        if (instance==null){
+        if (instance == null) {
             instance = new SearchEngineController();
         }
         return instance;
@@ -44,67 +44,66 @@ public class SearchEngineController {
     }
 
     public List<Document> getDocumentsForQuery(String query) {
-        logger.log(Level.INFO, "Query: {0}",query);
+        logger.log(Level.INFO, "Query: {0}", query);
         return searchHelper.handle(query);
     }
 
     public void runIndexation(String folderUID) throws IOException, GeneralSecurityException {
 
-            logger.log(Level.INFO, "Starting indexing.");
+        logger.log(Level.INFO, "Starting indexing.");
 
-            IndexHelper indexHelper = new IndexHelper();
+        IndexHelper indexHelper = new IndexHelper();
 
-            int indexedTerms = 0;
-            long sizeOfIndexed = 0;
-
-            GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
-
-            for (File f : drive) {
-                long sizeOfFile = 0;
-                sizeOfIndexed += sizeOfFile;
-                logger.log(Level.INFO, "Document to ingest: [{0}] \tSize: {1}KB\tTotal: {2}KB.", new Object[]{f.getName(), sizeOfFile,sizeOfIndexed});
+        int indexedTerms = 0;
 
 
-                boolean shouldSave = false;
-                int termsRed = 0;
+        GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
 
-                Integer docID = indexHelper.getDocumentID(f);
+        for (File f : drive) {
 
-                String text = read(f);
-                FileParser fp = new FileParser(text);
+            logger.log(Level.INFO, "Document to ingest: [{0}]", f.getName());
 
-                for (String term : fp) {
-                    if (!term.trim().isEmpty()) {
 
-                        termsRed++;
-                        indexedTerms++;
+            boolean shouldSave = false;
+            int termsRed = 0;
 
-                        if (indexedTerms % DLCConstants.LIMIT_WITHOUT_SAVE == 0) {
-                            shouldSave = true;
-                        }
+            Integer docID = indexHelper.getDocumentID(f);
 
-                        VocabularyEntry ve = indexHelper.getVocabularyEntryForTerm(term);
-                        PostList pl = indexHelper.getPostList(ve);
+            String text = read(f);
+            FileParser fp = new FileParser(text);
 
-                        ve.addTermOcurrance();
-                        pl.addDocument(docID);
+            for (String term : fp) {
+                if (!term.trim().isEmpty()) {
 
+                    termsRed++;
+                    indexedTerms++;
+
+                    if (indexedTerms % DLCConstants.LIMIT_WITHOUT_SAVE == 0) {
+                        shouldSave = true;
                     }
-                }
-                logger.log(Level.INFO, "Terms red for document [{0}]. Total terms indexed [{1}]", new Object[]{termsRed, indexedTerms});
-                if (shouldSave) {
-                    indexHelper.commit();
+
+                    VocabularyEntry ve = indexHelper.getVocabularyEntryForTerm(term);
+                    PostList pl = indexHelper.getPostList(ve);
+
+                    ve.addTermOcurrance();
+                    pl.addDocument(docID);
+
                 }
             }
-            logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
-            indexHelper.finishIndexing();
-            searchHelper.update();
-
+            logger.log(Level.INFO, "Terms red for document [{0}]. Total terms indexed [{1}]", new Object[]{termsRed, indexedTerms});
+            if (shouldSave) {
+                indexHelper.commit();
+            }
         }
+        logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
+        indexHelper.finishIndexing();
+        searchHelper.update();
 
-        private String read(com.google.api.services.drive.model.File file) throws IOException {
-            return GoogleDriveDowloader.download(file);
-        }
+    }
+
+    private String read(com.google.api.services.drive.model.File file) throws IOException {
+        return GoogleDriveDowloader.download(file);
+    }
 
 
 }
