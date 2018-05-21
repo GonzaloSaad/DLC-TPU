@@ -36,7 +36,7 @@
 
         var td1 = "<td>" + a[i].id + "</td>";
         var td2 = "<td>" + a[i].name + "</td>";
-        var td3 = "<td>" + "<a href=" + a[i].webViewLink + ">"+ a[i].webViewLink + "</a>" + "</td>";
+        var td3 = "<td>" + "<a href=" + a[i].webViewLink + " target='_blank'>"+ a[i].webViewLink + "</a>" + "</td>";
         var td4 = "<td>" + "<a href=" + a[i].webContentLink + ">" + a[i].webContentLink + "</td>";
 
 
