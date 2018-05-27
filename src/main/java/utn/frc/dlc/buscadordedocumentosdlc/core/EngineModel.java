@@ -3,14 +3,13 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 import com.google.api.services.drive.model.File;
-import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentManagement;
-import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.DocumentMapManagement;
-import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.InternalFoldersManagement;
-import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.VocabularyManagement;
+import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.*;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +19,7 @@ public class EngineModel {
     private static EngineModel instance;
     private final Map<String, VocabularyEntry> VOCABULARY;
     private final Map<String, Integer> DOC_ID_MAP;
+    private final List<String> FOLDERS_INDEXED;
 
     public static EngineModel getInstance() {
         if (instance == null) {
@@ -30,20 +30,37 @@ public class EngineModel {
 
     private EngineModel() {
 
-        Map<String, Integer> dmap = DocumentMapManagement.getInstance().getDocumentMap();
-        Map<String, VocabularyEntry> voc = VocabularyManagement.getInstance().getVocabulary();
+        Map<String, Integer> dmap = null;
+        Map<String, VocabularyEntry> voc = null;
 
-        if (voc == null || dmap == null) {
+        List<String> flist = FolderListManagement.getInstance().getFolderList();
+        if (flist != null) {
+            dmap = DocumentMapManagement.getInstance().getDocumentMap();
+            if (dmap !=null) {
+                voc = VocabularyManagement.getInstance().getVocabulary();
+            }
+        }
+
+
+        if (voc == null || dmap == null || flist==null) {
             voc = new HashMap<>();
             dmap = new HashMap<>();
+            flist = new ArrayList<>();
             clearWorkingDirectory();
             logger.log(Level.INFO, "No data recovered, vocabulary and doc map initialized.");
         } else {
-            logger.log(Level.INFO, "Vocabulary recovered with [{0}] terms. Doc map recovered with [{1}] docs.", new Object[]{voc.size(), dmap.size()});
+            logger.log(Level.INFO, "Vocabulary recovered with [{0}] terms. Doc map recovered with [{1}] docs. Indexed Document recovered with [{2}].", new Object[]{voc.size(), dmap.size(), flist.size()});
+            logger.log(Level.INFO, "Indexed folders.");
+            for(String s: flist){
+                logger.log(Level.INFO,s);
+            }
         }
         VOCABULARY = voc;
         DOC_ID_MAP = dmap;
+        FOLDERS_INDEXED = flist;
     }
+
+
 
     private void clearWorkingDirectory() {
         InternalFoldersManagement.getInstance().clearAll();
@@ -65,29 +82,48 @@ public class EngineModel {
         return DOC_ID_MAP;
     }
 
-    public Integer getFromDocMap(com.google.api.services.drive.model.File file) {
+    public Integer getFromDocMap(File file) {
         return getDocMap().get(file.getName());
     }
 
-    public void addToDocMap(com.google.api.services.drive.model.File file, int docID) {
+    public void addToDocMap(File file, int docID) {
         getDocMap().put(file.getName(), docID);
         persistDocument(file, docID);
+    }
+
+    public List<String> getFoldersIndexed() {
+        return FOLDERS_INDEXED;
+    }
+
+    public boolean wasFolderIndexed(String uid){
+        return getFoldersIndexed().contains(uid);
+    }
+
+    public void addIndexedFolder(String uid){
+        if (!wasFolderIndexed(uid)){
+            getFoldersIndexed().add(uid);
+        }
     }
 
     public void commit() {
         persistDocMap();
         persistVocabulary();
+        persistIndexedFolderList();
     }
 
     private void persistVocabulary() {
-        VocabularyManagement.getInstance().saveVocabulary(VOCABULARY);
+        VocabularyManagement.getInstance().saveVocabulary(getVocabulary());
     }
 
     private void persistDocMap() {
-        DocumentMapManagement.getInstance().saveDocumentMap(DOC_ID_MAP);
+        DocumentMapManagement.getInstance().saveDocumentMap(getDocMap());
     }
 
-    private void persistDocument(com.google.api.services.drive.model.File file, int docID) {
+    private void persistIndexedFolderList(){
+        FolderListManagement.getInstance().saveFolderList(getFoldersIndexed());
+    }
+
+    private void persistDocument(File file, int docID) {
         new DocumentPersistingThread(file, docID).start();
     }
 

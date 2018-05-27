@@ -62,7 +62,7 @@
     </script>
     
     <body style="background-color: beige">
-        <h1 style="text-align: center">DLC - TPU - Indexador de Documentos</h1>
+        <h1 style="text-align: center">DLC - TPU - Buscador de Documentos</h1>
         <hr>
         <div class=search_header>
             <form class="form-inline" role="form" >

@@ -5,9 +5,9 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
+
+import java.io.*;
 
 /**
  *
@@ -24,14 +24,15 @@ public class DLCObjectWriter<T> {
     public boolean write(T o, String path) {
         
         try {
-            File file = new File(path);
+            File file = new File(DLCConstantsAndProperties.getCompletePath(path));
             if (!file.exists()){
                 file.createNewFile();
             }
-            FileOutputStream ostream = new FileOutputStream(path);
-            ObjectOutputStream p = new ObjectOutputStream(ostream);
-            p.writeObject(o);
-            p.flush();
+            OutputStream outputStream = new FileOutputStream(file);
+            ObjectOutput objectOutput = new ObjectOutputStream(outputStream);
+            objectOutput.writeObject(o);
+            objectOutput.flush();
+            outputStream.close();
             
         } catch (Exception e) {            
             return false;

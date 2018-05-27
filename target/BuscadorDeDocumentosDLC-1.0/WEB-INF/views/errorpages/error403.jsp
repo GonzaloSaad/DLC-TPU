@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Buscador de Documentos - TP1</h1>
+        <h1>DLC - TPU - Buscador de Documentos - 403</h1>
         <hr>
             <p>Pagina no valida</p>
         </div>

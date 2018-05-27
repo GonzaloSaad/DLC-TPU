@@ -32,11 +32,11 @@ public class IndexHelper {
     }
 
     private void startCache() {
-        cache = new IntermediateCache(DLCConstants.INDEX_CACHE_SIZE);
+        cache = new IntermediateCache(DLCConstantsAndProperties.INDEX_CACHE_SIZE);
     }
 
     private int getNextFileIndex() {
-        return (EngineModel.getInstance().getVocabulary().size() % DLCConstants.POST_FILES);
+        return (EngineModel.getInstance().getVocabulary().size() % DLCConstantsAndProperties.POST_FILES);
     }
 
     private int getNextDocumentID() {
@@ -59,7 +59,7 @@ public class IndexHelper {
         if (postPack != null) {
             pl = postPack.get(term);
             if (pl == null) {
-                pl = new PostList(term);
+                pl = new PostList();
                 postPack.put(term, pl);
             }
         }
@@ -113,62 +113,12 @@ public class IndexHelper {
     }
 
     public void finishIndexing() {
-
-        commit(false);
         logger.log(Level.INFO, "Finalize indexing...");
-
-        Runnable job1 = new UpdatingNrJob(0, DLCConstants.POST_FILES / 2);
-        Runnable job2 = new UpdatingNrJob(DLCConstants.POST_FILES / 2, DLCConstants.POST_FILES);
-
-
-        Thread thread = new Thread(job1);
-        thread.start();
-
-        job2.run();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        EngineModel.getInstance().commit();
+        commit(false);
         logger.log(Level.INFO, "Done.");
 
     }
 
-    private class UpdatingNrJob implements Runnable {
-        private int start;
-        private int end;
-
-
-        public UpdatingNrJob(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        @Override
-        public void run() {
-            doUpdate();
-
-        }
-
-        public void doUpdate() {
-            for (int i = start; i < end; i++) {
-                Map<String, PostList> postPack = PostPackManagement.getInstance().getPostPack(i);
-                if (postPack == null) {
-                    throw new RuntimeException("The model was not consistent.");
-                }
-
-                for (String term : postPack.keySet()) {
-                    VocabularyEntry ve = EngineModel.getInstance().getFromVocabulary(term);
-                    if (ve == null) {
-                        throw new RuntimeException("The model was not consistent.");
-                    }
-                    ve.updateNrValue(postPack.get(term));
-                }
-
-            }
-        }
-    }
 
 
 }

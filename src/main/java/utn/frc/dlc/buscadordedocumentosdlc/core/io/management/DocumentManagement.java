@@ -6,7 +6,6 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
-import java.io.IOException;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectReader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.util.DLCObjectWriter;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
@@ -17,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class DocumentManagement {
 
-    private static final String DOCUMENTS_PATH = "/dlc/docs/doc";
+    private static final String DOCUMENTS_PATH = "dlc/docs/doc";
     private static final String DOCUMENT_EXTENSION = ".dlc";
     private static DocumentManagement instance;
 

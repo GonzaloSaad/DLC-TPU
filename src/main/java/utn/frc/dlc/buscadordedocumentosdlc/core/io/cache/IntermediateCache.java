@@ -108,7 +108,7 @@ public class IntermediateCache extends Cache {
                     PostList cpe = postPack.get(key);
 
                     if (dpe == null) {
-                        diskPostPack.put(cpe.getTerm(), cpe);
+                        diskPostPack.put(key, cpe);
                         continue;
                     }
 

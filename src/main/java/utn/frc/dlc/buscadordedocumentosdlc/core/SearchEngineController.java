@@ -7,9 +7,7 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 import com.google.api.services.drive.model.File;
-import org.apache.commons.io.FileUtils;
 import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
-import utn.frc.dlc.buscadordedocumentosdlc.core.files.FolderFileList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveDowloader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveFileList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
@@ -17,6 +15,7 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,9 +47,15 @@ public class SearchEngineController {
         return searchHelper.handle(query);
     }
 
-    public void runIndexation(String folderUID) throws IOException, GeneralSecurityException {
+    public void runIndexation(String folderUID) throws IOException, GeneralSecurityException, URISyntaxException {
 
         logger.log(Level.INFO, "Starting indexing.");
+
+        if (EngineModel.getInstance().wasFolderIndexed(folderUID)){
+            logger.log(Level.INFO,"Folder already indexed.");
+            return;
+        }
+
 
         IndexHelper indexHelper = new IndexHelper();
 
@@ -78,7 +83,7 @@ public class SearchEngineController {
                     termsRed++;
                     indexedTerms++;
 
-                    if (indexedTerms % DLCConstants.LIMIT_WITHOUT_SAVE == 0) {
+                    if (indexedTerms % DLCConstantsAndProperties.LIMIT_WITHOUT_SAVE == 0) {
                         shouldSave = true;
                     }
 
@@ -96,8 +101,10 @@ public class SearchEngineController {
             }
         }
         logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
+        EngineModel.getInstance().addIndexedFolder(folderUID);
         indexHelper.finishIndexing();
         searchHelper.update();
+
 
     }
 

@@ -23,7 +23,7 @@ public class SearchHelper {
     }
 
     private void startCache() {
-        cache = new SearchCache(DLCConstants.SEARCH_CACHE_SIZE);
+        cache = new SearchCache(DLCConstantsAndProperties.SEARCH_CACHE_SIZE);
     }
 
     public List<Document> handle(String query) {
@@ -31,15 +31,15 @@ public class SearchHelper {
         List<Document> documentList = new ArrayList<>();
         int documents = 0;
 
-        if (docSet!=null && !docSet.isEmpty()){
-            for(DocumentResult dr: docSet){
+        if (docSet != null && !docSet.isEmpty()) {
+            for (DocumentResult dr : docSet) {
                 Document doc = DocumentManagement.getInstance().getDocument(dr.getDocID());
-                if (doc!=null){
+                if (doc != null) {
                     documentList.add(doc);
                     documents++;
                 }
 
-                if (documents == DLCConstants.R){
+                if (documents == DLCConstantsAndProperties.R) {
                     break;
                 }
 
@@ -82,7 +82,7 @@ public class SearchHelper {
                 continue;
             }
 
-            int Nr = ve.getNr();
+            int Nr = pl.getNr();
             double idf = Math.log((double) N / (double) Nr);
 
             for (PostListItem pli : pl.getListOfDocument()) {
@@ -144,14 +144,6 @@ public class SearchHelper {
         @Override
         public int compareTo(DocumentResult otherDoc) {
             return (getValue() < otherDoc.getValue() ? 1 : -1);
-        }
-    }
-
-    private static class VocabularyComparator implements Comparator<VocabularyEntry> {
-
-        @Override
-        public int compare(VocabularyEntry v1, VocabularyEntry v2) {
-            return v1.compareTo(v2);
         }
     }
 

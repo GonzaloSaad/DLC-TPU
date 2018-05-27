@@ -4,8 +4,9 @@ C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\busc
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\io\management\DocumentManagement.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\SearchHelper.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\files\FolderFileList.java
+C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\DLCConstantsAndProperties.java
+C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\io\management\FolderListManagement.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\server\IndexationServlet.java
-C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\DLCConstants.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\SearchEngineController.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\googledrive\DLCLocalServerReceiver.java
 C:\Users\Gonzalo\Desktop\UTN-2018\DLC\TPU\DLC-TPU\src\main\java\utn\frc\dlc\buscadordedocumentosdlc\core\model\Document.java

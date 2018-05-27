@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 
 @WebServlet(urlPatterns = "/index")
@@ -27,7 +28,7 @@ public class IndexationServlet extends HttpServlet {
 
         try {
             searchEngineController.runIndexation(folderUID);
-        } catch (GeneralSecurityException e) {
+        } catch (GeneralSecurityException | URISyntaxException e) {
             e.printStackTrace();
         }
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/indexerHome.jsp").forward(httpServletRequest, httpServletResponse);

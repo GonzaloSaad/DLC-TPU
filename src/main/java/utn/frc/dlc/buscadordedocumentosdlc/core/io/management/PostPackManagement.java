@@ -12,7 +12,7 @@ import java.util.Map;
 public class PostPackManagement{
 
 
-    public static final String POST_FOLDER_PATH = "/dlc/post/post";
+    public static final String POST_FOLDER_PATH = "dlc/post/post";
     public static final String POST_FILE_EXTENSION = ".post";
 
     private static PostPackManagement instancePck;

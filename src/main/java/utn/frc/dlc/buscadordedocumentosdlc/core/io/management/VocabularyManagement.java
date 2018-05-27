@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class VocabularyManagement {
 
-    public static final String VOCABULARY_FILE_PATH = "/dlc/vocabulary.dlc";
+    public static final String VOCABULARY_FILE_PATH = "dlc/vocabulary.dlc";
     private static VocabularyManagement instance;
 
     private VocabularyManagement() {

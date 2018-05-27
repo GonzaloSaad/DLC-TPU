@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>utn.frc.dlc</groupId>
@@ -42,37 +43,30 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-drive</artifactId>
             <version>v3-rev112-1.23.0</version>
-
         </dependency>
         <dependency>
             <groupId>com.google.api-client</groupId>
             <artifactId>google-api-client</artifactId>
             <version>1.23.0</version>
-
         </dependency>
         <dependency>
             <groupId>com.google.oauth-client</groupId>
             <artifactId>google-oauth-client-java6</artifactId>
             <version>1.23.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>com.google.http-client</groupId>
             <artifactId>google-http-client-jackson2</artifactId>
             <version>1.23.0</version>
-
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.3.1</version>
-
         </dependency>
         <dependency>
             <groupId>com.google.http-client</groupId>
@@ -101,15 +95,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
-
-
-
-
     </dependencies>
-
-
 
     <build>
         <pluginManagement>
@@ -130,11 +116,29 @@
                     <artifactId>tomcat7-maven-plugin</artifactId>
                     <version>2.2</version>
                     <configuration>
-                        <path>/</path>
+                        <path>/dlc</path>
                         <contextReloadable>true</contextReloadable>
                     </configuration>
                 </plugin>
             </plugins>
+
         </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>pc-gonza</id>
+            <properties>
+                <resource.path>C:\Users\Gonzalo\Desktop\recursos\</resource.path>
+            </properties>
+        </profile>
+    </profiles>
+
+
 </project>

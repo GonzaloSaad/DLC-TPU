@@ -5,11 +5,9 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,31 +22,17 @@ public class DLCObjectReader<T> {
     }
 
     public T read(String path) {
-        Object o = null;
-        InputStream in = DLCObjectReader.class.getClassLoader().getResourceAsStream(path);
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-       
-        ObjectInputStream p = null;
-        try {
-            p = new ObjectInputStream(in);
-        } catch (IOException ex) {
-            Logger.getLogger(DLCObjectReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        try {
-            o = p.readObject();
-        } catch (IOException ex) {
-            Logger.getLogger(DLCObjectReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DLCObjectReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Object o;
+        File file = new File(DLCConstantsAndProperties.getCompletePath(path));
 
-        try {
-            p.close();
-        } catch (IOException ex) {
-            Logger.getLogger(DLCObjectReader.class.getName()).log(Level.SEVERE, null, ex);
+        try(InputStream inputStream = new FileInputStream(file)) {
+            ObjectInput objectInput = new ObjectInputStream(inputStream);
+            o = objectInput.readObject();
+            objectInput.close();
+        }catch (IOException | ClassNotFoundException e){
+            return null;
         }
-        
 
         return (T) o;
     }

@@ -6,6 +6,8 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
+import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,9 +18,10 @@ import java.util.logging.Logger;
  * @author Gonzalo
  */
 public class InternalFoldersManagement {
+    private static final String ROOT_PATH = "dlc";
     private static InternalFoldersManagement instance;
     private static final Logger logger = Logger.getLogger(InternalFoldersManagement.class.getName());
-    private static final File ROOT_FILE = new File("/dlc");
+    private static final File ROOT_FILE = new File(DLCConstantsAndProperties.getCompletePath(ROOT_PATH));
 
     private InternalFoldersManagement() {
 

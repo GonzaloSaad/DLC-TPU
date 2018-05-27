@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class DocumentMapManagement {
     
-    private static final String DOCUMENT_MAP_PATH = "/dlc/dmap.dlc";
+    private static final String DOCUMENT_MAP_PATH = "dlc/dmap.dlc";
     private static DocumentMapManagement instance;
     
     private DocumentMapManagement(){

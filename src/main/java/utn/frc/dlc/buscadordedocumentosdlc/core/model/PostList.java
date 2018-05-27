@@ -13,17 +13,11 @@ import java.util.*;
  */
 public class PostList implements Serializable {
 
-    private final String TERM;
-
     private final Map<Integer, Integer> DOC_HASH_MAP;
 
-    public PostList(String term) {
-        TERM = term;
-        DOC_HASH_MAP = new HashMap<>();
-    }
+    public PostList() {
 
-    public String getTerm() {
-        return TERM;
+        DOC_HASH_MAP = new HashMap<>();
     }
 
     public Map<Integer, Integer> getMap() {
