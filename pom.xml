@@ -138,6 +138,12 @@
                 <resource.path>C:\Users\Gonzalo\Desktop\recursos\</resource.path>
             </properties>
         </profile>
+        <profile>
+            <id>cloud-instance-1</id>
+            <properties>
+                <resource.path>/home/gonza/dlc-buscador-project/DLC-TPU-RESOURCES</resource.path>
+            </properties>
+        </profile>
     </profiles>
 
 
