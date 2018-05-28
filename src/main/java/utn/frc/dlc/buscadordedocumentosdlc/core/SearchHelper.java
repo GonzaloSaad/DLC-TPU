@@ -11,11 +11,10 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostListItem;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.util.*;
-import java.util.logging.Logger;
+
 
 public class SearchHelper {
 
-    private static Logger logger = Logger.getLogger(SearchHelper.class.getName());
     private Cache cache;
 
     public SearchHelper() {

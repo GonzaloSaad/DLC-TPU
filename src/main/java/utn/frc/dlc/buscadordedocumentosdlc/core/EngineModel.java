@@ -3,16 +3,18 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 import com.google.api.services.drive.model.File;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.*;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.Document;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class EngineModel {
     private static final Logger logger = Logger.getLogger(EngineModel.class.getName());
@@ -49,11 +51,9 @@ public class EngineModel {
             clearWorkingDirectory();
             logger.log(Level.INFO, "No data recovered, vocabulary and doc map initialized.");
         } else {
-            logger.log(Level.INFO, "Vocabulary recovered with [{0}] terms. Doc map recovered with [{1}] docs. Indexed Document recovered with [{2}].", new Object[]{voc.size(), dmap.size(), flist.size()});
-            logger.log(Level.INFO, "Indexed folders.");
-            for(String s: flist){
-                logger.log(Level.INFO,s);
-            }
+            logger.log(Level.INFO, MessageFormat.format("Vocabulary recovered with [{0}] terms. Doc map recovered with [{1}] docs. Indexed Document recovered with [{2}].", voc.size(), dmap.size(), flist.size()));
+            logger.log(Level.INFO, MessageFormat.format("Indexed folders: {0}",flist));
+
         }
         VOCABULARY = voc;
         DOC_ID_MAP = dmap;

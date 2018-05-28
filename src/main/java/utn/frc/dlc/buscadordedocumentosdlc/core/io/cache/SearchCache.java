@@ -6,9 +6,12 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SearchCache extends Cache {
 
+    private static final Logger logger = Logger.getLogger(SearchCache.class.getName());
     private int pointer;
     private Map<Integer, Integer> cacheMap;
 
@@ -43,6 +46,7 @@ public class SearchCache extends Cache {
         storedPostPack = getPostPackFromStorage(file);
         set(storedPostPack, indexOfLessUsedCache);
         cacheMap.put(storedPostPack.getFile(), indexOfLessUsedCache);
+        logger.log(Level.INFO,"Cache occupancy [{0}]", occupancy());
 
 
 
@@ -99,7 +103,7 @@ public class SearchCache extends Cache {
         }
     }
 
-    public double occupacy() {
+    private double occupancy() {
         int cached = 0;
         for (CachedPostPack c : getCache()) {
             if (c != null) {

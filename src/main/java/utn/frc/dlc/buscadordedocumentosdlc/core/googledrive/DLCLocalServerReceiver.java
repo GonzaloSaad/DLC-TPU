@@ -1,14 +1,15 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.googledrive;
 
 
-
 import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiver;
 import com.google.api.client.util.Throwables;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.Semaphore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Request;
 import org.mortbay.jetty.Server;
@@ -17,13 +18,13 @@ import org.mortbay.jetty.handler.AbstractHandler;
 /**
  * OAuth 2.0 verification code receiver that runs a Jetty server on a free port, waiting for a
  * redirect with the verification code.
- *
+ * <p>
  * <p>
  * Implementation is thread-safe.
  * </p>
  *
- * @since 1.11
  * @author Yaniv Inbar
+ * @since 1.11
  */
 public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
 
@@ -31,69 +32,35 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
 
     private static final String CALLBACK_PATH = "/Callback";
 
-    /** Server or {@code null} before {@link #getRedirectUri()}. */
     private Server server;
 
-    /** Verification code or {@code null} for none. */
     String code;
 
-    /** Error code or {@code null} for none. */
     String error;
 
-    /** To block until receiving an authorization response or stop() is called. */
     final Semaphore waitUnlessSignaled = new Semaphore(0 /* initially zero permit */);
 
-    /** Port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}. */
     private int port;
 
-    /** Host name to use. */
     private final String host;
 
-    /** Callback path of redirect_uri */
     private final String callbackPath;
 
-    /**
-     * URL to an HTML page to be shown (via redirect) after successful login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String successLandingPageUrl;
 
-    /**
-     * URL to an HTML page to be shown (via redirect) after failed login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String failureLandingPageUrl;
 
-    /**
-     * Constructor that starts the server on {@link #LOCALHOST} and an unused port.
-     *
-     * <p>
-     * Use {@link Builder} if you need to specify any of the optional parameters.
-     * </p>
-     */
     public DLCLocalServerReceiver() {
         this(LOCALHOST, -1, CALLBACK_PATH, null, null);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param host Host name to use
-     * @param port Port to use or {@code -1} to select an unused port
-     */
     DLCLocalServerReceiver(String host, int port,
-                        String successLandingPageUrl, String failureLandingPageUrl) {
+                           String successLandingPageUrl, String failureLandingPageUrl) {
         this(host, port, CALLBACK_PATH, successLandingPageUrl, failureLandingPageUrl);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param host Host name to use
-     * @param port Port to use or {@code -1} to select an unused port
-     */
     DLCLocalServerReceiver(String host, int port, String callbackPath,
-                        String successLandingPageUrl, String failureLandingPageUrl) {
+                           String successLandingPageUrl, String failureLandingPageUrl) {
         this.host = host;
         this.port = port;
         this.callbackPath = callbackPath;
@@ -117,15 +84,6 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
         return "http://" + host + ":" + port + callbackPath;
     }
 
-    /**
-     * Blocks until the server receives a login result, or the server is stopped
-     * by {@link #stop()}, to return an authorization code.
-     *
-     * @return authorization code if login succeeds; may return {@code null} if the server
-     *    is stopped by {@link #stop()}
-     * @throws IOException if the server receives an error code (through an HTTP request
-     *    parameter {@code error})
-     */
     @Override
     public String waitForCode() throws IOException {
         waitUnlessSignaled.acquireUninterruptibly();
@@ -149,38 +107,22 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
         }
     }
 
-    /** Returns the host name to use. */
     public String getHost() {
         return host;
     }
 
-    /**
-     * Returns the port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
-     */
     public int getPort() {
         return port;
     }
 
-    /**
-     * Returns callback path used in redirect_uri.
-     */
     public String getCallbackPath() {
         return callbackPath;
     }
 
-    /**
-     * Builder.
-     *
-     * <p>
-     * Implementation is not thread-safe.
-     * </p>
-     */
     public static final class Builder {
 
-        /** Host name to use. */
         private String host = LOCALHOST;
 
-        /** Port to use or {@code -1} to select an unused port. */
         private int port = -1;
 
         private String successLandingPageUrl;
@@ -188,40 +130,33 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
 
         private String callbackPath = CALLBACK_PATH;
 
-        /** Builds the {@link DLCLocalServerReceiver}. */
         public DLCLocalServerReceiver build() {
             return new DLCLocalServerReceiver(host, port, callbackPath,
                     successLandingPageUrl, failureLandingPageUrl);
         }
 
-        /** Returns the host name to use. */
         public String getHost() {
             return host;
         }
 
-        /** Sets the host name to use. */
         public Builder setHost(String host) {
             this.host = host;
             return this;
         }
 
-        /** Returns the port to use or {@code -1} to select an unused port. */
         public int getPort() {
             return port;
         }
 
-        /** Sets the port to use or {@code -1} to select an unused port. */
         public Builder setPort(int port) {
             this.port = port;
             return this;
         }
 
-        /** Returns the callback path of redirect_uri */
         public String getCallbackPath() {
             return callbackPath;
         }
 
-        /** Set the callback path of redirect_uri */
         public Builder setCallbackPath(String callbackPath) {
             this.callbackPath = callbackPath;
             return this;
@@ -234,10 +169,6 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
         }
     }
 
-    /**
-     * Jetty handler that takes the verifier token passed over from the OAuth provider and stashes it
-     * where {@link #waitForCode} will find it.
-     */
     class CallbackHandler extends AbstractHandler {
 
         @Override
@@ -261,8 +192,7 @@ public final class DLCLocalServerReceiver implements VerificationCodeReceiver {
                     writeLandingHtml(response);
                 }
                 response.flushBuffer();
-            }
-            finally {
+            } finally {
                 waitUnlessSignaled.release();
             }
         }

@@ -7,6 +7,8 @@ package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
 import com.google.api.services.drive.model.File;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.files.FileParser;
 import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveDowloader;
 import utn.frc.dlc.buscadordedocumentosdlc.core.googledrive.GoogleDriveFileList;
@@ -17,9 +19,8 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.text.MessageFormat;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -43,36 +44,50 @@ public class SearchEngineController {
     }
 
     public List<Document> getDocumentsForQuery(String query) {
-        logger.log(Level.INFO, "Query: {0}", query);
+        logger.log(Level.INFO, MessageFormat.format("Query: {0}", query));
         return searchHelper.handle(query);
     }
 
     public void runIndexation(String folderUID) throws IOException, GeneralSecurityException, URISyntaxException {
 
-        logger.log(Level.INFO, "Starting indexing.");
-
-        if (EngineModel.getInstance().wasFolderIndexed(folderUID)){
-            logger.log(Level.INFO,"Folder already indexed.");
+        if (!folderUID.matches(DLCConstantsAndProperties.GOOGLE_DRIVE_FOLDER_UID_REGEX)) {
+            logger.log(Level.ERROR, MessageFormat.format("The string [{0}] is not a folder uid.", folderUID));
             return;
         }
 
+        logger.log(Level.INFO, MessageFormat.format("Folder [{0}] to be indexed.",folderUID));
+
+        if (EngineModel.getInstance().wasFolderIndexed(folderUID)) {
+            logger.log(Level.INFO, "Folder already indexed.");
+            return;
+        }
+
+        GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
+
+        if (drive.isEmpty()){
+            logger.log(Level.ERROR, "The folder is empty.");
+            return;
+        }
+
+        logger.log(Level.INFO, "Starting indexing.");
 
         IndexHelper indexHelper = new IndexHelper();
 
         int indexedTerms = 0;
 
-
-        GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
-
         for (File f : drive) {
 
-            logger.log(Level.INFO, "Document to ingest: [{0}]", f.getName());
+            logger.log(Level.INFO, MessageFormat.format("Document to ingest: [{0}]", f.getName()));
 
+            Integer docID = indexHelper.getDocumentID(f);
+
+            if (docID == DLCConstantsAndProperties.DOCUMENT_ALREADY_INDEXED) {
+                logger.log(Level.INFO, "Document already existed.");
+                continue;
+            }
 
             boolean shouldSave = false;
             int termsRed = 0;
-
-            Integer docID = indexHelper.getDocumentID(f);
 
             String text = read(f);
             FileParser fp = new FileParser(text);
@@ -95,12 +110,12 @@ public class SearchEngineController {
 
                 }
             }
-            logger.log(Level.INFO, "Terms red for document [{0}]. Total terms indexed [{1}]", new Object[]{termsRed, indexedTerms});
+            logger.log(Level.INFO, MessageFormat.format("Terms red for document [{0}]. Total terms indexed [{1}]", termsRed, indexedTerms));
             if (shouldSave) {
                 indexHelper.commit();
             }
         }
-        logger.log(Level.INFO, "Terms red [{0}].", indexedTerms);
+        logger.log(Level.INFO, MessageFormat.format("Terms red [{0}].", indexedTerms));
         EngineModel.getInstance().addIndexedFolder(folderUID);
         indexHelper.finishIndexing();
         searchHelper.update();

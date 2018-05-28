@@ -5,6 +5,7 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.util;
 
+import org.nustaq.serialization.FSTObjectInput;
 import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
 
 import java.io.*;
@@ -27,7 +28,7 @@ public class DLCObjectReader<T> {
         File file = new File(DLCConstantsAndProperties.getCompletePath(path));
 
         try(InputStream inputStream = new FileInputStream(file)) {
-            ObjectInput objectInput = new ObjectInputStream(inputStream);
+            ObjectInput objectInput = new FSTObjectInput(inputStream);
             o = objectInput.readObject();
             objectInput.close();
         }catch (IOException | ClassNotFoundException e){

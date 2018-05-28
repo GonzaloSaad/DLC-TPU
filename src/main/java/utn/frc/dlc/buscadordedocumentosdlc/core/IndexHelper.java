@@ -6,18 +6,18 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core;
 
 
-
 import com.google.api.services.drive.model.File;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.Cache;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.cache.IntermediateCache;
-import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * @author Gonzalo
@@ -26,6 +26,8 @@ public class IndexHelper {
 
     private static Logger logger = Logger.getLogger(IndexHelper.class.getName());
     private Cache cache;
+    private static boolean PARALLEL = true;
+    private static boolean NO_PARALLEL = false;
 
     public IndexHelper() {
         startCache();
@@ -45,7 +47,7 @@ public class IndexHelper {
 
     public PostList getPostList(VocabularyEntry ve) {
 
-        if (ve==null){
+        if (ve == null) {
             return null;
         }
 
@@ -85,9 +87,10 @@ public class IndexHelper {
         if (docID == null) {
             docID = getNextDocumentID();
             EngineModel.getInstance().addToDocMap(file, docID);
-            logger.log(Level.INFO, "Document [{0}] did not exist. Created entry with [{1}] sequence number.", new Object[]{file.getName(), docID});
+            logger.log(Level.INFO, MessageFormat.format("Document [{0}] did not exist. Created entry with [{1}] sequence number.", file.getName(), docID));
         } else {
-            logger.log(Level.INFO, "Document [{0}] did exist, with [{1}] sequence number.", new Object[]{file.getName(), docID});
+            logger.log(Level.INFO, MessageFormat.format("Document [{0}] did exist, with [{1}] sequence number.",file.getName(), docID));
+            return DLCConstantsAndProperties.DOCUMENT_ALREADY_INDEXED;
         }
         return docID;
     }
@@ -109,16 +112,14 @@ public class IndexHelper {
     }
 
     public void commit() {
-        commit(true);
+        commit(PARALLEL);
     }
 
     public void finishIndexing() {
         logger.log(Level.INFO, "Finalize indexing...");
-        commit(false);
+        commit(NO_PARALLEL);
         logger.log(Level.INFO, "Done.");
-
     }
-
 
 
 }

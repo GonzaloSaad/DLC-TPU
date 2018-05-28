@@ -1,12 +1,14 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.cache;
 
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
+import java.text.MessageFormat;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class IntermediateCache extends Cache {
 
@@ -55,7 +57,7 @@ public class IntermediateCache extends Cache {
     private void mergePostPacks(boolean parallel) {
 
         try {
-            logger.log(Level.INFO,"Waiting for persisting thread to finish. Status [{0}].",persistingThread.getState());
+            logger.log(Level.INFO, MessageFormat.format("Waiting for persisting thread to finish. Status [{0}].",persistingThread.getState()));
             persistingThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

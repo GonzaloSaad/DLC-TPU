@@ -5,6 +5,8 @@
  */
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.util;
 
+import org.nustaq.serialization.FSTConfiguration;
+import org.nustaq.serialization.FSTObjectOutput;
 import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
 
 import java.io.*;
@@ -29,7 +31,7 @@ public class DLCObjectWriter<T> {
                 file.createNewFile();
             }
             OutputStream outputStream = new FileOutputStream(file);
-            ObjectOutput objectOutput = new ObjectOutputStream(outputStream);
+            ObjectOutput objectOutput = new FSTObjectOutput(outputStream);
             objectOutput.writeObject(o);
             objectOutput.flush();
             outputStream.close();

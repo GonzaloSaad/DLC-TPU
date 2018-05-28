@@ -13,6 +13,8 @@ public class DLCConstantsAndProperties {
     public static final int SEARCH_CACHE_SIZE = (int) (POST_FILES * FILES_CACHED_PROP);
     public static final int INDEX_CACHE_SIZE = POST_FILES;
     public static final int R = 30;
+    public static final int DOCUMENT_ALREADY_INDEXED = -1;
+    public static final String GOOGLE_DRIVE_FOLDER_UID_REGEX = "[a-zA-Z0-9_-]{33}";
 
 
     private static String getPathForResourceFolder(){

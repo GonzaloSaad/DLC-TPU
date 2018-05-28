@@ -6,13 +6,15 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.management;
 
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.DLCConstantsAndProperties;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.MessageFormat;
+
 
 /**
  * @author Gonzalo
@@ -47,7 +49,7 @@ public class InternalFoldersManagement {
 
     private void delete(File f) throws IOException {
         if (f.isDirectory()) {
-            logger.log(Level.INFO, "Cleaning [{0}]", f.getName());
+            logger.log(Level.INFO, MessageFormat.format("Cleaning [{0}]", f.getName()));
             for (File c : f.listFiles())
                 delete(c);
         } else {
