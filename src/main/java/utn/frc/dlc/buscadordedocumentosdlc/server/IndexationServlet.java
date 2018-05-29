@@ -26,15 +26,11 @@ public class IndexationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String folderUID = httpServletRequest.getParameter("f");
 
-        try {
-            searchEngineController.runIndexation(folderUID);
-        } catch (GeneralSecurityException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        searchEngineController.runIndexation(folderUID);
+
         httpServletRequest.getRequestDispatcher("/WEB-INF/views/indexerHome.jsp").forward(httpServletRequest, httpServletResponse);
 
     }
-
 
 
 }

@@ -17,9 +17,9 @@ import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.VocabularyEntry;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.GeneralSecurityException;
 import java.text.MessageFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 
@@ -44,25 +44,36 @@ public class SearchEngineController {
     }
 
     public List<Document> getDocumentsForQuery(String query) {
-        logger.log(Level.INFO, MessageFormat.format("Query: {0}", query));
-        return searchHelper.handle(query);
+
+        Instant start = Instant.now();
+        List<Document> results = searchHelper.handle(query);
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start,end);
+        logger.log(Level.INFO, MessageFormat.format("Results: {0}\t Time: {1}ms \tQuery: {2}", results.size(), duration.toMillis(),query));
+        return results;
     }
 
-    public void runIndexation(String folderUID) throws IOException, GeneralSecurityException, URISyntaxException {
+    public void runIndexation(String folderUID) throws IOException {
 
         if (!folderUID.matches(DLCConstantsAndProperties.GOOGLE_DRIVE_FOLDER_UID_REGEX)) {
             logger.log(Level.ERROR, MessageFormat.format("The string [{0}] is not a folder uid.", folderUID));
             return;
         }
 
-        logger.log(Level.INFO, MessageFormat.format("Folder [{0}] to be indexed.",folderUID));
+        logger.log(Level.INFO, MessageFormat.format("Folder [{0}] to be indexed.", folderUID));
 
         if (EngineModel.getInstance().wasFolderIndexed(folderUID)) {
             logger.log(Level.INFO, "Folder already indexed.");
             return;
         }
 
-        GoogleDriveFileList drive = new GoogleDriveFileList(folderUID);
+        GoogleDriveFileList drive;
+        try {
+            drive = new GoogleDriveFileList(folderUID);
+        } catch (Exception e){
+            logger.log(Level.ERROR, MessageFormat.format("There was an error loading drive. [{0}].", e.getClass()));
+            return;
+        }
 
         if (drive.isEmpty()){
             logger.log(Level.ERROR, "The folder is empty.");
@@ -70,7 +81,7 @@ public class SearchEngineController {
         }
 
         logger.log(Level.INFO, "Starting indexing.");
-
+        Instant start = Instant.now();
         IndexHelper indexHelper = new IndexHelper();
 
         int indexedTerms = 0;
@@ -115,10 +126,14 @@ public class SearchEngineController {
                 indexHelper.commit();
             }
         }
-        logger.log(Level.INFO, MessageFormat.format("Terms red [{0}].", indexedTerms));
+
         EngineModel.getInstance().addIndexedFolder(folderUID);
         indexHelper.finishIndexing();
         searchHelper.update();
+
+        Instant end = Instant.now();
+        Duration duration = Duration.between(start,end);
+        logger.log(Level.INFO, MessageFormat.format("Terms red {0}\tTime: {1}mins.", indexedTerms, duration.toMinutes()));
 
 
     }

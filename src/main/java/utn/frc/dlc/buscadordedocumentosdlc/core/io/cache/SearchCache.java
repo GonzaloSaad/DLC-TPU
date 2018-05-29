@@ -1,13 +1,15 @@
 package utn.frc.dlc.buscadordedocumentosdlc.core.io.cache;
 
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import utn.frc.dlc.buscadordedocumentosdlc.core.io.management.PostPackManagement;
 import utn.frc.dlc.buscadordedocumentosdlc.core.model.PostList;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class SearchCache extends Cache {
 
@@ -46,7 +48,7 @@ public class SearchCache extends Cache {
         storedPostPack = getPostPackFromStorage(file);
         set(storedPostPack, indexOfLessUsedCache);
         cacheMap.put(storedPostPack.getFile(), indexOfLessUsedCache);
-        logger.log(Level.INFO,"Cache occupancy [{0}]", occupancy());
+        logger.log(Level.INFO, MessageFormat.format("Stored recovered [{0}]. Cache occupancy [{1}]",storedPostPack.getFile(), occupancy()));
 
 
 
